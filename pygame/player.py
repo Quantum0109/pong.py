@@ -1,14 +1,3 @@
-"""
-    Paddle(screen,
-           width,
-           height,
-           color,
-           centerx,
-           centery,
-           velocity
-    )
-"""
-
 import pygame
 
 class Player():
@@ -38,13 +27,16 @@ class Player():
     def draw(self):
         self.screen.blit(self.image, self.rect)
 
-    def control(self, keys):
+    def control(self, keys, ball):
         if self.is_auto == True:
-            pass
+            if ball.rect.y < self.rect.y and self.rect.top > self.screen_rect.top:
+                 self.rect.y -= self.velocity
+            if ball.rect.y > self.rect.y and self.rect.bottom > self.screen_rect.bottom:
+                 self.rect.y += self.velocity
         else:
-            if keys[self.key_up]:
+            if keys[self.key_up] and self.rect.top > self.screen_rect.top:
                 self.rect.y -= self.velocity
-            if keys[self.key_down]:
+            if keys[self.key_down] and self.rect.bottom < self.screen_rect.bottom:
                 self.rect.y += self.velocity 
 
 

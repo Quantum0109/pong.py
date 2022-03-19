@@ -31,10 +31,11 @@ while True:
     keys = pygame.key.get_pressed()
                     
     player.draw()
-    player.control(keys)
-    opponent.control(keys)
+    player.control(keys, ball)
+    opponent.control(keys, ball)
     opponent.draw()
     ball.draw()
+    ball.movement(player, opponent)
     all_sprites.update()
     all_sprites.draw(screen)
     pygame.display.flip()
