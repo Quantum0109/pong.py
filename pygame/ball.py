@@ -1,11 +1,6 @@
-"""
-    очки на экране 2 штука
-    class Score(screen, owner, color, width, height)
-"""
-
 import pygame
-
-
+import random
+# https://sfbgames.itch.io/chiptone сайт с музыкой
 
 class Ball:
     def __init__(self,
@@ -46,3 +41,17 @@ class Ball:
         if self.rect.colliderect(player.rect) or self.rect.colliderect(opponent.rect):
             self.velocity_x *= -1
             self.velocity_y *= -1
+
+    def ball_to_center(self):
+        self.rect.centerx = self.screen_rect.centerx
+        self.rect.centery = self.screen_rect.centery
+        self.velocity_x *= random.choice((-1, -1))
+        self.velocity_y *= random.choice((-1, -1))
+
+    def goal(self, player_score, opponent_score):
+        if self.rect.left <= self.screen_rect.left:
+            opponent_score.score += 1
+            self.ball_to_center()
+        if self.rect.right >= self.screen_rect.right:
+            player_score.score += 1
+            self.ball_to_center()
