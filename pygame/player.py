@@ -3,7 +3,7 @@ import pygame
 class Player():
     def __init__(self,
            screen,
-           width=10,
+           width=15,
            height=100,
            color=(255, 255, 255),
            centerx=100,
@@ -28,17 +28,15 @@ class Player():
         self.screen.blit(self.image, self.rect)
 
     def control(self, keys, ball):
-        if self.is_auto == True:
-            if ball.rect.y < self.rect.y and self.rect.top > self.screen_rect.top:
-                 self.rect.y -= self.velocity
-            if ball.rect.y > self.rect.y and self.rect.bottom > self.screen_rect.bottom:
-                 self.rect.y += self.velocity
+        if self.is_auto:
+            if ball.rect.centery < self.rect.centery and self.rect.top > self.screen_rect.top:
+                self.rect.centery -= self.velocity
+            if ball.rect.centery > self.rect.centery and self.rect.bottom < self.screen_rect.bottom:
+                self.rect.centery += self.velocity
         else:
             if keys[self.key_up] and self.rect.top > self.screen_rect.top:
                 self.rect.y -= self.velocity
             if keys[self.key_down] and self.rect.bottom < self.screen_rect.bottom:
-                self.rect.y += self.velocity 
-
-
-
-
+                self.rect.y += self.velocity
+    def move_to_center(self):
+       self.rect.centery = self.screen_rect.centery

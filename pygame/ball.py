@@ -10,6 +10,7 @@ class Ball:
         velocity_x=1,
         velocity_y=1,
         color=(255, 255, 255),
+        delay=1000
     ):
         self.screen = screen
         self.screen_rect = screen.get_rect()
@@ -20,6 +21,7 @@ class Ball:
         self.rect.centery = self.screen_rect.centery
         self.velocity_x = velocity_x
         self.velocity_y = velocity_y
+        self.delay = delay
 
     def draw(
         self
@@ -37,21 +39,23 @@ class Ball:
             self.velocity_y *= -1
         elif self.rect.bottom >= self.screen_rect.bottom:
             self.velocity_y *= -1
-        # TODO: нет колизий право и лево
         if self.rect.colliderect(player.rect) or self.rect.colliderect(opponent.rect):
             self.velocity_x *= -1
             self.velocity_y *= -1
 
-    def ball_to_center(self):
+    def ball_to_center(self, player, opponent):
+        now = pygame.time.delay(self.delay)
         self.rect.centerx = self.screen_rect.centerx
         self.rect.centery = self.screen_rect.centery
         self.velocity_x *= random.choice((-1, -1))
         self.velocity_y *= random.choice((-1, -1))
+        player.move_to_center()
+        opponent.move_to_center()
 
-    def goal(self, player_score, opponent_score):
+    def goal(self, player_score, opponent_score, player, opponent):
         if self.rect.left <= self.screen_rect.left:
             opponent_score.score += 1
-            self.ball_to_center()
+            self.ball_to_center(player, opponent)
         if self.rect.right >= self.screen_rect.right:
             player_score.score += 1
-            self.ball_to_center()
+            self.ball_to_center(player, opponent)
