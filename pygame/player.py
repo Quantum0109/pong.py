@@ -1,13 +1,14 @@
 import pygame
+import random
 
 class Player():
     def __init__(self,
            screen,
-           width=15,
+           width=20,
            height=100,
            color=(255, 255, 255),
            centerx=100,
-           velocity=3,
+           velocity=10,
            is_auto=False,
            key_up=pygame.K_UP,
            key_down=pygame.K_DOWN
@@ -24,6 +25,7 @@ class Player():
         self.key_down = key_down
         self.velocity = velocity
 
+
     def draw(self):
         self.screen.blit(self.image, self.rect)
 
@@ -38,5 +40,8 @@ class Player():
                 self.rect.y -= self.velocity
             if keys[self.key_down] and self.rect.bottom < self.screen_rect.bottom:
                 self.rect.y += self.velocity
+
     def move_to_center(self):
        self.rect.centery = self.screen_rect.centery
+       direction = random.choice((-1, 1))
+       self.rect.centery += random.randrange(0, self.inaccuracy) * direction

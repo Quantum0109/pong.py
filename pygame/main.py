@@ -45,6 +45,6 @@ while game:
     all_sprites.update()
     all_sprites.draw(screen)
     pygame.display.flip()
-    clock.tick(1000)
+    clock.tick(60)
 
 pygame.quit()
