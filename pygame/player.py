@@ -32,14 +32,19 @@ class Player():
     def control(self, keys, ball):
         if self.is_auto:
             if ball.rect.centery < self.rect.centery and self.rect.top > self.screen_rect.top:
-                self.rect.centery -= self.velocity
-            if ball.rect.centery > self.rect.centery and self.rect.bottom < self.screen_rect.bottom:
-                self.rect.centery += self.velocity
+                self.velocity = -10
+            elif ball.rect.centery > self.rect.centery and self.rect.bottom < self.screen_rect.bottom:
+                self.velocity = 10
+            else:
+                self.velocity = 0
+            self.rect.y += self.velocity
         else:
             if keys[self.key_up] and self.rect.top > self.screen_rect.top:
-                self.rect.y -= self.velocity
-            if keys[self.key_down] and self.rect.bottom < self.screen_rect.bottom:
-                self.rect.y += self.velocity
+                self.velocity = -10
+            elif keys[self.key_down] and self.rect.bottom < self.screen_rect.bottom:
+               self.velocity = 10
+            else: self.velocity = 0
+            self.rect.y += self.velocity
 
     def move_to_center(self):
        self.rect.centery = self.screen_rect.centery
